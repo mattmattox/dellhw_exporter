@@ -158,4 +158,10 @@ docs-serve:
 docs-build:
 	docker run --net=host --volume "$$(pwd)":"$$(pwd)" --workdir "$$(pwd)" -it squidfunk/mkdocs-material build --clean
 
-.PHONY: all build crossbuild docker format package promu style tarball test vet docs-serve docs-build
+helm-docs-binary:
+	GO111MODULE=on $(GO) install github.com/norwoodj/helm-docs/cmd/helm-docs@v1.11.0
+
+helm-docs: helm-docs-binary
+	helm-docs
+
+.PHONY: all build crossbuild docker format package promu style tarball test vet docs-serve docs-build helm-docs docs

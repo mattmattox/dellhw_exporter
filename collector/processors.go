@@ -31,7 +31,7 @@ func init() {
 }
 
 // NewProcessorsCollector returns a new processorsCollector
-func NewProcessorsCollector() (Collector, error) {
+func NewProcessorsCollector(cfg *Config) (Collector, error) {
 	return &processorsCollector{}, nil
 }
 

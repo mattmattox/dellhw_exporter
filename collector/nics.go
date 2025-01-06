@@ -24,6 +24,7 @@ import (
 
 type nicsCollector struct {
 	current *prometheus.Desc
+	nicList []string
 }
 
 func init() {
@@ -31,13 +32,15 @@ func init() {
 }
 
 // NewNicsCollector returns a new nicsCollector
-func NewNicsCollector() (Collector, error) {
-	return &nicsCollector{}, nil
+func NewNicsCollector(cfg *Config) (Collector, error) {
+	return &nicsCollector{
+		nicList: cfg.MonitoredNICs,
+	}, nil
 }
 
 // Update Prometheus metrics
 func (c *nicsCollector) Update(ch chan<- prometheus.Metric) error {
-	nics, err := or.Nics()
+	nics, err := or.Nics(c.nicList...)
 	if err != nil {
 		return err
 	}

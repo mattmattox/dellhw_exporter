@@ -1,5 +1,5 @@
 /*
-Copyright 2021 The dellhw_exporter Authors. All rights reserved.
+Copyright 2024 The dellhw_exporter Authors. All rights reserved.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -39,6 +39,10 @@ var severityTests = []SeverityTestResult{
 	{
 		Input:  "Non-Critical",
 		Output: "2",
+	},
+	{
+		Input:  "What if a high severity issue walks into a bar?",
+		Output: "1",
 	},
 }
 

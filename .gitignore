@@ -37,3 +37,8 @@ dellhw_exporter.spec
 .srcpackage/
 RPMBUILD
 
+# Docs
+site/
+
+# Nix
+.direnv/

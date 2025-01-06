@@ -19,15 +19,23 @@ package collector
 import (
 	"github.com/galexrt/dellhw_exporter/pkg/omreport"
 	"github.com/prometheus/client_golang/prometheus"
+	"go.uber.org/zap"
 )
 
 // Namespace holds the metrics namespace/first part
 const Namespace = "dell_hw"
 
-var or *omreport.OMReport
+var (
+	or     *omreport.OMReport
+	logger = zap.NewNop()
+)
+
+type Config struct {
+	MonitoredNICs []string
+}
 
 // Factories contains the list of all available collectors.
-var Factories = make(map[string]func() (Collector, error))
+var Factories = make(map[string]func(*Config) (Collector, error))
 
 // Collector is the interface a collector has to implement.
 type Collector interface {
@@ -38,4 +46,9 @@ type Collector interface {
 // SetOMReport a given OMReport for the collectors
 func SetOMReport(omrep *omreport.OMReport) {
 	or = omrep
+}
+
+// SetLogger
+func SetLogger(l *zap.Logger) {
+	logger = l
 }

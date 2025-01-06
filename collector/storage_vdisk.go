@@ -20,6 +20,7 @@ import (
 	"strconv"
 
 	"github.com/prometheus/client_golang/prometheus"
+	"go.uber.org/zap"
 )
 
 type storageVdiskCollector struct {
@@ -31,7 +32,7 @@ func init() {
 }
 
 // NewStorageVdiskCollector returns a new storageVdiskCollector
-func NewStorageVdiskCollector() (Collector, error) {
+func NewStorageVdiskCollector(cfg *Config) (Collector, error) {
 	return &storageVdiskCollector{}, nil
 }
 
@@ -42,10 +43,14 @@ func (c *storageVdiskCollector) Update(ch chan<- prometheus.Metric) error {
 		return err
 	}
 	for _, value := range storageVdisk {
+		logger.
+			With(zap.Stringer("vdisk", value)).
+			Debug("iterating vdisk values")
 		float, err := strconv.ParseFloat(value.Value, 64)
 		if err != nil {
 			return err
 		}
+
 		c.current = prometheus.NewDesc(
 			prometheus.BuildFQName(Namespace, "", value.Name),
 			"Overall status of virtual disks + RAID level (if available).",

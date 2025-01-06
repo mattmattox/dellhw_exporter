@@ -8,7 +8,7 @@ The exporter was originally made by [PrFalken](https://github.com/PrFalken). Due
 
 Omreport parsing functions were borrowed from the [Bosun project](https://github.com/bosun-monitor/bosun/blob/master/cmd/scollector/collectors/dell_hw.go), thank you very much for that, they are the most tedious part of the job.
 
-This exporter wraps the "omreport" command from Dell OMSA. If you can't run omreport on your system, the exporter won't export any metrics.
+This exporter wraps the `omreport` command from Dell OMSA. If you can't run or get any output from `omreport` on your system, then the exporter probably won't export any metrics.
 
 ## Compatibility
 
@@ -38,7 +38,7 @@ For flags and environment variables, see [Configuration doc page](docs/configura
 
 ## Caching
 
-Optional caching can be enabled to prevent performance issues caused by this exporter, see [Caching doc page](docs/caching.md).
+Optional caching can be enabled to prevent performance issues caused by this exporter, see [Caching doc page](caching.md).
 
 ## Running in Container
 
@@ -80,16 +80,16 @@ To run without Docker / Podman either download a [release binary](https://github
 ```console
 ./dellhw_exporter
 ./dellhw_exporter --help
-./dellhw_exporter YOUR_FLAGS
+./dellhw_exporter [YOUR_FLAGS]
 ```
 
 **The DELL OMSA services must already be running for the exporter to be able to collect metrics!**
 
-E.g., run `/opt/dell/srvadmin/sbin/srvadmin-services.sh start` and / or `systemctl start SERVICE_NAME` (to enable autostart use `systemctl enable SERVICE_NAME`; where `SERVICE_NAME` [are the DELL OMSA service(s) you installed](http://linux.dell.com/repo/hardware/omsa.html)).
+E.g., run `/opt/dell/srvadmin/sbin/srvadmin-services.sh start` or `systemctl start SERVICE_NAME` (to enable autostart on use `systemctl enable SERVICE_NAME`; where `SERVICE_NAME` [are the DELL OMSA service(s) you installed](http://linux.dell.com/repo/hardware/omsa.html)).
 
 ## Prometheus
 
-The exporter runs on port `9137` TCP.
+The exporter by default runs on port `9137` TCP.
 
 Example static Prometheus Job config:
 
@@ -100,7 +100,7 @@ Example static Prometheus Job config:
     scrape_interval: 60s
     static_configs:
       - targets:
-        - 'YOUR_SERVER_HERE:9137'
+        - 'YOUR_EXPORTER_SERVER_HERE:9137'
 [...]
 ```
 
@@ -118,27 +118,6 @@ See [Troubleshooting doc page](docs/troubleshooting.md).
 
 ## Development
 
-Golang version `1.18` is used for testing and building the dellhw_exporter.
+Golang version `1.23` is used for testing and building the dellhw_exporter.
 
 `go mod` is used for "vendoring" of the dependencies.
-
-### Creating a new Release
-
-1. Update the version in the [`VERSION` file](VERSION).
-2. Create an entry in the [`CHANGELOG.md` file](CHANGELOG.md).
-    Example of a changelog entry:
-    ```
-    ## 1.12.0 / 2022-02-02
-
-    * [ENHANCEMENT] Added Pdisk Remaining Rated Write Endurance Metric by @adityaborgaonkar
-    * [BUGFIX] ci: fix build routine issues
-    ```
-    The following "kinds" of entries can be added:
-    * `CHANGE`
-    * `FEATURE`
-    * `ENHANCEMENT`
-    * `BUGFIX`
-3. Commit the version increase with a commit messages in format: `version: bump to v1.12.0`
-4. Create the `git` tag using `git tag v1.12.0`
-5. Now push the changes and commit using `git push && git push --tags`
-6. In a few minutes the new release should be available for "approval" under the [releases section](https://github.com/galexrt/dellhw_exporter/releases). Edit and save the release on GitHub and the release is complete.

@@ -1,3 +1,77 @@
+## 2.0.0-rc.1 / 2024-10-19
+
+* [CHORE] add a basic nix flake to make development easier for me :-)
+* [CHORE] replace logrus with zap logger
+* [CHORE] update dependencies
+* [CHORE] update golang version to 1.23
+* [FEATURE] add `--collectors-additional` flag to allow enabling a disabled exporter on top of the `--collectors-enabled` flag
+* [FEATURE] Helm chart: add `additionalEnv` list and update chart documentation
+* [FEATURE] rewrite the omreport parser logic to be more flexible and consistent across `omreport` commands and versions (fixes #115 and other parsing related issues)
+* [FIX] fix docs page not working (404 errors when opening any page)
+* [FIX] updated documentation for new changes and added a FAQ page
+
+## 1.13.13 / 2024-09-02
+
+* [FEATURE] add exporter version metric `dell_hw_exporter_version`
+* [SECURITY] update go dependencies
+
+## 1.13.12 / 2024-05-15
+
+* [SECURITY] update github.com/prometheus/client_golang to v1.19.1
+* [CHORE] update golang version to 1.22 in CI and 1.22.3 in go.mod
+
+## 1.13.11 / 2024-04-15
+
+* [BUGFIX] add workaround for vdisk rebuilding progress causing parsing errors, see [#106](https://github.com/galexrt/dellhw_exporter/issues/106)
+
+## 1.13.10 / 2024-02-28
+
+* [BUGFIX] ignore exit code 255 for omreport command - should resolve [#99](https://github.com/galexrt/dellhw_exporter/issues/99)
+
+## 1.13.9 / 2024-02-16
+
+* [BUGFIX] log the command that failed to execute
+
+## 1.13.8 / 2024-02-16
+
+* [BUGFIX] fix vdisk for (older?) omreport outputs
+
+## 1.13.7 / 2024-02-15
+
+* [CHORE] updated minimum go version to 1.21
+
+## 1.13.6 / 2024-02-15
+
+* [BUGFIX] add vdisk read and write policy to vdisk collector to address final parts of [#93](https://github.com/galexrt/dellhw_exporter/issues/93)
+
+## 1.13.5 / 2024-02-15
+
+* [BUGFIX] add "Non-Raid" state to pdisk collector to address parts of [#93](https://github.com/galexrt/dellhw_exporter/issues/93)
+* [BUGFIX] add logging to vdisk collector
+
+## 1.13.4 / 2024-02-13
+
+* [BUGFIX] add logging to pdisk collector
+
+## 1.13.3 / 2024-02-13
+
+* [BUGFIX] improve log lines to better be able to pin point the recent parsing issues
+
+## 1.13.2 / 2024-02-06
+
+* [BUGFIX] [Consider 'Not Applicable' as healthy for Nic status #95](https://github.com/galexrt/dellhw_exporter/pull/95)
+    * Thanks to [@B0go](https://github.com/B0go) for fixing this issue!
+
+## 1.13.1 / 2023-12-07
+
+* [BUGFIX] Fix container image build issue caused by wget, use curl now
+
+## 1.13.0 / 2023-12-07
+
+* [ENHANCEMENT] [Allow for user to specify a list of interfaces to monitor #89](https://github.com/galexrt/dellhw_exporter/pull/89)
+* [ENHANCEMENT] Added Storage Pdisk Hardware Encryption status
+* [SECURITY] Updated dependencies to latest version
+
 ## 1.12.2 / 2022-05-31
 
 * [SECURITY] update gopkg.in/yaml.v3 to v3.0.1 (CVE-2022-28948)

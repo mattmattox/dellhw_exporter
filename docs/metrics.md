@@ -10,7 +10,7 @@ Some metrics don't follow this pattern as they return, e.g., VDisk RAID level, "
 
 ### PDisk and VDisk States, VDisk Policy Values
 
-Can be found in the [`pkg/omreport/util.go` file](pkg/omreport/util.go).
+Can be found in the [`pkg/omreport/util.go` file](https://github.com/galexrt/dellhw_exporter/blob/main/pkg/omreport/util.go).
 
 ## Example Metrics Output
 
@@ -21,6 +21,9 @@ Can be found in the [`pkg/omreport/util.go` file](pkg/omreport/util.go).
     If you want to contribute a `/metrics` output of the exporter, please open an issue or a pull request, thanks!
 
 ```plain
+# HELP dell_hw_exporter_version Constant '1' value with version, revision, and branch labels from the dellhw_exporter version info.
+# TYPE dell_hw_exporter_version gauge
+dell_hw_exporter_version{branch="",revision="",version=""} 1
 # HELP dell_hw_bios Version info of firmwares/bios.
 # TYPE dell_hw_bios gauge
 dell_hw_bios{manufacturer="dell inc.",release_date="06/26/2020",version="2.8.1"} 0
@@ -255,6 +258,14 @@ dell_hw_storage_pdisk_status{controller="0",controller_name="Dell HBA330 Mini (E
 # TYPE dell_hw_storage_pdisk_failure_predicted gauge
 dell_hw_storage_pdisk_failure_predicted{controller="0",controller_name="Dell HBA330 Mini (Embedded)",disk="0_1_10"} 0
 dell_hw_storage_pdisk_failure_predicted{controller="0",controller_name="Dell HBA330 Mini (Embedded)",disk="0_1_11"} 0
+# HELP storage_pdisk_remaining_rated_write_endurance Overall status of physical disks + failure prediction (if available).
+# TYPE storage_pdisk_remaining_rated_write_endurance gauge
+storage_pdisk_remaining_rated_write_endurance{controller="0",controller_name="Dell HBA330 Mini (Embedded)",disk="0_1_10"} 100
+storage_pdisk_remaining_rated_write_endurance{controller="0",controller_name="Dell HBA330 Mini (Embedded)",disk="0_1_11"} 100
+# HELP storage_pdisk_storage_encrypted Overall status of physical disks + failure prediction (if available).
+# TYPE storage_pdisk_storage_encrypted gauge
+storage_pdisk_storage_encrypted{controller="0",controller_name="Dell HBA330 Mini (Embedded)",disk="0_1_10"} 0
+storage_pdisk_storage_encrypted{controller="0",controller_name="Dell HBA330 Mini (Embedded)",disk="0_1_11"} 0
 # HELP dell_hw_storage_vdisk_status Overall status of virtual disks + RAID level (if available).
 # TYPE dell_hw_storage_vdisk_status gauge
 dell_hw_storage_vdisk_status{controller_name="Dell HBA330 Mini (Embedded)",vdisk="0",vdisk_name="GenericR1_0"} 0

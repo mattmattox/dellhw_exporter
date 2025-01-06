@@ -1,5 +1,5 @@
 /*
-Copyright 2021 The dellhw_exporter Authors. All rights reserved.
+Copyright 2024 The dellhw_exporter Authors. All rights reserved.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,41 +17,35 @@ limitations under the License.
 package collector
 
 import (
-	"strconv"
-
 	"github.com/prometheus/client_golang/prometheus"
 )
 
-type chassisBatteriesCollector struct {
+type chassisInfoCollector struct {
 	current *prometheus.Desc
 }
 
 func init() {
-	Factories["chassis_batteries"] = NewChassisBatteriesCollector
+	Factories["chassis_info"] = NewChassisInfoCollector
 }
 
-// NewChassisBatteriesCollector returns a new chassisBatteriesCollector
-func NewChassisBatteriesCollector(cfg *Config) (Collector, error) {
-	return &chassisBatteriesCollector{}, nil
+// NewChassisCollector returns a new chassisInfoCollector
+func NewChassisInfoCollector(cfg *Config) (Collector, error) {
+	return &chassisInfoCollector{}, nil
 }
 
 // Update Prometheus metrics
-func (c *chassisBatteriesCollector) Update(ch chan<- prometheus.Metric) error {
-	chassisBatteries, err := or.ChassisBatteries()
+func (c *chassisInfoCollector) Update(ch chan<- prometheus.Metric) error {
+	chassisInfo, err := or.ChassisInfo()
 	if err != nil {
 		return err
 	}
-	for _, value := range chassisBatteries {
-		float, err := strconv.ParseFloat(value.Value, 64)
-		if err != nil {
-			return err
-		}
+	for _, value := range chassisInfo {
 		c.current = prometheus.NewDesc(
 			prometheus.BuildFQName(Namespace, "", value.Name),
-			"Overall status of chassis batteries",
+			"Chassis info details in labels.",
 			nil, value.Labels)
 		ch <- prometheus.MustNewConstMetric(
-			c.current, prometheus.GaugeValue, float)
+			c.current, prometheus.GaugeValue, 0)
 	}
 
 	return nil

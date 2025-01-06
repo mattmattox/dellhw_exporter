@@ -1,4 +1,4 @@
-FROM docker.io/library/rockylinux:9.2
+FROM docker.io/library/rockylinux:9.3
 
 ARG BUILD_DATE="N/A"
 ARG REVISION="N/A"
@@ -24,7 +24,7 @@ ENV PATH="$PATH:/opt/dell/srvadmin/bin:/opt/dell/srvadmin/sbin" \
 # Do overall update and install missing packages needed for OpenManage
 RUN yum -y update && \
     yum -y install wget perl passwd gcc which tar libstdc++.so.6 glibc.i686 make && \
-    wget -q -o bootstrap.cgi "https://linux.dell.com/repo/hardware/dsu/bootstrap.cgi" && \
+    curl -sS --retry 3 --fail -L -o bootstrap.cgi "https://linux.dell.com/repo/hardware/dsu/bootstrap.cgi" && \
     yes | bash bootstrap.cgi && \
     rm bootstrap.cgi && \
     yum -y install srvadmin-base srvadmin-storageservices && \
